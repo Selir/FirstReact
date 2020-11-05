@@ -16,13 +16,13 @@ function App() {
     <BrowserRouter>
     <UtenteProvider>
       <Router history={history}> 
-      
+      <CarrelloProvider>
         <Route
           exact
         path={"/"}
         component={Homepage}
         />
-        <CarrelloProvider>
+        
         <Route
           exact
         path={"/login"}

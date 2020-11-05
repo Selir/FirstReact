@@ -2,7 +2,9 @@ import react from 'react'
 import { Button, Card } from 'react-bootstrap'
 
 
-export const ProdottoComponent = ({ prodotto,Compra,showButtonCompra }) => {
+export const ProdottoComponent = ({ prodotto,Compra,showButtonCompra,Elimina }) => {
+
+
 
     return (
         <>
@@ -13,11 +15,16 @@ export const ProdottoComponent = ({ prodotto,Compra,showButtonCompra }) => {
                 <Card.Text>
                     Prezzo:{prodotto.prezzo}
                 </Card.Text>
-                {showButtonCompra&&<Card.Text>
-                    Prezzo:{prodotto.quantita}
+                {prodotto.quantita&&<Card.Text>
+                    Quantità:{prodotto.quantita}
                 </Card.Text>}
-                <Button variant="primary">Elimina</Button>
-               { showButtonCompra&&<Button variant="primary" onClick={()=>Compra(prodotto)}>Compra</Button>}
+                {JSON.parse(localStorage.getItem('Utente')).ruolo==="admin"&&
+                <>
+                <Button variant="primary" onClick={()=>Elimina(prodotto.id)}>Elimina</Button>
+                <Button variant="primary">Aggiungi</Button>
+                <Button variant="primary">Modifica</Button>
+                </>}
+                <Button variant="primary" onClick={()=>Compra(prodotto)}>{showButtonCompra?"Aggiungi":"Compra"}</Button>
             </Card.Body>
         </Card>
 </>

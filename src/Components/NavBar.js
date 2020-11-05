@@ -20,12 +20,6 @@ export const NavBarComponent =()=>{
     dispatch(utenteAction.logoutAction())
   }
 
-
-
-
-
-
-
     return(
         <>
         <Navbar bg="dark" variant="dark">

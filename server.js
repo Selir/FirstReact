@@ -132,18 +132,11 @@ app.delete('/carrello/:id',(req,res)=>{
         var listaCarrello=JSON.parse(data);
        
          
-        var verificaQuantita=listaCarrello.filter((prodotto)=>prodotto.id===req.body.id)[0]
+        var verificaPresenza=listaCarrello.filter((prodotto)=>prodotto.id===req.params.id&&prodotto.quantita>1)[0]
         if (verificaPresenza)
-            verificaPresenza = { ...verificaPresenza, quantita: verificaPresenza.quantita++ }
+            verificaPresenza = { ...verificaPresenza, quantita: verificaPresenza.quantita-- }
         else {
-            const nuovoProdotto = {
-                id: req.body.id,
-                titolo: req.body.titolo,
-                descrizione: req.body.descrizione,
-                prezzo: req.body.prezzo,
-                quantita: "1"
-            };
-            listaCarrello.push(nuovoProdotto)
+            listaCarrello=listaCarrello.filter((prodotto)=>prodotto.id!==req.params.id)
         }
         
         fs.writeFile(
@@ -157,32 +150,4 @@ app.delete('/carrello/:id',(req,res)=>{
     })
 })
 
-app.delete('/carrello/:id',(req,res)=>{
-    fs.readFile(CARRELLO_DATA_FILE,(err,data)=>{
-
-        const listaCarrello=JSON.parse(data)
-        const listaCarrelloNuova=[];
-        const idDelete=req.params.id
-        var flag=true;
-
-        listaCarrello.map((el)=>
-            {
-                if(el.id===idDelete&&flag===true){
-                    flag=false;
-                }
-                else{
-                    listaCarrelloNuova.push(el);
-                }
-            })
-
-        fs.writeFile(
-            CARRELLO_DATA_FILE,
-            JSON.stringify(listaCarrelloNuova),
-            //STAMPA DELLA NUOVA LISTA PRODOTTI
-            ()=>{
-                res.json(listaCarrelloNuova);
-            }
-        )
-    })
-})
 

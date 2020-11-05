@@ -2,7 +2,9 @@ const URL_BACKEND="http://localhost:9999";
 
 export const carrelloService={
     addCarrello,
-    viewCarrello
+    viewCarrello,
+    deleteCarrello,
+    
 };
 
     function addCarrello(req){
@@ -24,6 +26,18 @@ export const carrelloService={
         };
         return fetch(URL_BACKEND+'/carrello',requestOptions).
         then(response=>response.json()).catch(err=>console.log(err))
+    }
+
+    function deleteCarrello(id){
+
+        const requestOptions={
+            method:'DELETE',
+            headers:{ 'Content-Type': 'application/json'},
+    
+        };
+        return fetch(`${URL_BACKEND}/carrello/${id}`,requestOptions).
+        then(response=>response.json()).catch(err=>console.log(err))
+        
     }
 
 
